@@ -1,0 +1,598 @@
+:root {
+  --color-bg: #f4f5f9;
+  --color-surface: #ffffff;
+  --color-border: #dde1ea;
+  --color-primary: #2055ff;
+  --color-primary-soft: #e1e7ff;
+  --color-text: #1f2430;
+  --color-text-soft: #6b7280;
+  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.top-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.logo-text {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.main-nav {
+  border-top: 1px solid var(--color-border);
+}
+
+.main-nav ul {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.25rem 1.5rem;
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--color-text-soft);
+  font-size: 0.95rem;
+  padding: 0.35rem 0;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary-soft);
+}
+
+/* ============================================================
+   MAIN LAYOUT
+============================================================ */
+
+main {
+  max-width: 1200px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1.5rem;
+}
+
+/* ============================================================
+   HERO MAP
+============================================================ */
+
+.hero-map {
+  margin-bottom: 1rem;
+}
+
+.hero-title h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.8rem;
+}
+
+.hero-title p {
+  margin: 0 0 1.25rem;
+  color: var(--color-text-soft);
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 55vh;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  background-image: url("../img/mapa3.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: height 0.35s ease;
+}
+
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f172a;
+  font-weight: 500;
+  opacity: 0.7;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+/* Tarjetas flotantes sobre el mapa */
+
+/* =============== TARJETA FIJA (ABSOLUTE) ================== */
+.map-card {
+  position: absolute;
+  min-width: 200px;
+  max-width: 230px;
+  padding: 0; /* ahora el padding va en card-inner */
+  border-radius: var(--radius-md);
+  background: transparent; /* el fondo real está en card-inner */
+  border: none; /* el borde va dentro para animarlo sin jitter */
+  cursor: pointer;
+  overflow: visible;
+  transform: translate(-50%, -50%); /* mantiene posición del JS */
+}
+
+/* =============== CONTENIDO INTERIOR ANIMABLE ================== */
+.card-inner {
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* ======= TIPOGRAFÍA (SIN CAMBIOS) ======== */
+.card-inner h3 {
+  margin: 0 0 0.15rem;
+  font-size: 0.95rem;
+}
+
+.card-inner p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-soft);
+}
+
+.card-inner img.card-photo {
+  width: 80px;            /* tamaño del icono */
+  height: 80px;           /* tamaño del icono */
+  object-fit: contain;    /* NO recorta nada, mantiene el icono completo */
+  border-radius: 0;       /* sin bordes redondeados arriba */
+  display: block;
+  margin: 0 auto 0.5rem;  /* centrado y con separación abajo */
+}
+
+/* =============== EFECTO HOVER SUAVE 3–4 NIVELES ================== */
+.map-card:hover .card-inner {
+  animation: liftShadow 0.35s forwards;
+}
+
+@keyframes liftShadow {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 8px 18px rgba(15, 23, 42);
+  }
+  25% {
+    transform: translateY(-3px) scale(1.015);
+    box-shadow: 0 12px 24px rgba(15, 23, 42);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.025);
+    box-shadow: 0 16px 32px rgba(15, 23, 42);
+  }
+  75% {
+    transform: translateY(-9px) scale(1.035);
+    box-shadow: 0 20px 40px rgba(15, 23, 42);
+  }
+  100% {
+    transform: translateY(-12px) scale(1.045);
+    box-shadow: 0 26px 55px rgba(15, 23, 42);
+  }
+}
+
+/* CONTENEDOR DE TARJETAS (SIN CAMBIOS) */
+#institutions-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* ============================================================
+   PANEL BASE
+============================================================ */
+
+.panel {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.5rem 1.75rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid #e5e7eb;
+}
+
+/* ============================================================
+   SECTION - ROOMS (NO ALTURA ANIMADA)
+============================================================ */
+
+.section-rooms {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  margin-top: 1rem;
+}
+
+.section-rooms.show {
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 0 !important;
+}
+
+.rooms-grid {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.room-card {
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.95rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-4px);
+  background: #f3f4f6;
+}
+
+.room-card.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-soft);
+}
+
+.room-card h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+}
+
+.room-meta {
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+}
+
+.room-tags {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+}
+
+/* ============================================================
+   ESPACIADOR PARA CONTROLAR SCROLL
+============================================================ */
+
+#rooms-spacer {
+  height: 60vh;
+  transition: height 0.25s ease;
+}
+
+#rooms-spacer.hide {
+  height: auto;
+}
+
+/* ============================================================
+   SECTION - CALENDAR (VERSIÓN ESTABLE)
+============================================================ */
+
+.section-calendar {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    height 0.45s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.section-calendar.show {
+  height: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.calendar-layout {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+.calendar-info {
+  border-radius: var(--radius-md);
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.calendar-info h3 {
+  margin-top: 0;
+}
+
+.calendar-room-name {
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+}
+
+.calendar-room-details {
+  margin: 0 0 0.75rem;
+  padding-left: 1.1rem;
+  color: var(--color-text-soft);
+  font-size: 0.85rem;
+}
+
+.calendar-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--color-text-soft);
+}
+
+.legend-box {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  margin-right: 0.35rem;
+}
+
+.legend-free {
+  background: #bbf7d0;
+}
+
+.legend-busy {
+  background: #fecaca;
+}
+
+/* CALENDARIO VISUAL */
+
+.calendar-grid {
+  border-radius: var(--radius-md);
+  border: 1px solid #e5e7eb;
+  padding: 0.8rem;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--color-text-soft);
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+
+.day {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: #ffffff;
+  height: 36px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.day:hover {
+  transform: translateY(-3px);
+  background: #f3f4f6;
+}
+
+.day.empty {
+  visibility: hidden;
+}
+
+.day.free {
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+}
+
+.day.busy {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+.day.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary-soft);
+}
+
+/* BOTONES */
+
+.btn-primary,
+.btn-ghost {
+  font: inherit;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  padding: 0.5rem 1.25rem;
+  margin: 5px;
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  transform: scale(1.05);   /* ligero aumento */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); /* opcional, queda mejor */
+}
+
+.btn-ghost {
+  background: transparent;
+  padding: 0.2rem 0.6rem;
+  border-color: #d1d5db;
+  color: var(--color-text-soft);
+}
+
+.btn-ghost:hover {
+  background: #e5e7eb;
+}
+/*FORMULARIO*/
+.reservation-form {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.1);
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.reservation-form.show {
+  display: block;
+}
+
+.reservation-form h3 {
+  margin-top: 0;
+  margin-bottom: 0.7rem;
+}
+
+.reservation-form label {
+  font-size: 0.85rem;
+  display: block;
+  margin-top: 0.6rem;
+}
+
+.reservation-form input,
+.reservation-form select {
+  width: 100%;
+  padding: 0.45rem;
+  margin-top: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(6px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* FOOTER */
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 1rem 1.5rem 1.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-text-soft);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .rooms-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  main {
+    padding: 0 1rem;
+  }
+
+  .top-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .main-nav ul {
+    padding: 0.25rem 1rem;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .rooms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-card {
+    min-width: 170px;
+    max-width: 190px;
+    padding: 0.7rem;
+  }
+
+  .calendar-grid {
+    font-size: 0.9rem;
+  }
+}

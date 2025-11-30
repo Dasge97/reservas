@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+  # ===========================================================
+  # BASE DE DATOS - MYSQL + SCRIPT DE INICIO
+  # ===========================================================
+  db:
+    image: mysql:8.0
+    container_name: reservas_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: reservas_municipales
+      MYSQL_USER: reservas_user
+      MYSQL_PASSWORD: reservas_pass
+    ports:
+      - "3317:3306"   # puerto no estándar
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    networks:
+      - backend_net
+
+  # ===========================================================
+  # BACKEND - NODE.JS + EXPRESS
+  # ===========================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: reservas_backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_USER: reservas_user
+      DB_PASSWORD: reservas_pass
+      DB_NAME: reservas_municipales
+    ports:
+      - "3007:3001"   # API expuesta en puerto raro
+    depends_on:
+      - db
+    networks:
+      - backend_net
+
+  # ===========================================================
+  # FRONTEND - NGINX SERVING STATIC FILES
+  # ===========================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: reservas_frontend
+    restart: unless-stopped
+    ports:
+      - "9091:80"     # Frontend en puerto no estándar
+    depends_on:
+      - backend
+    networks:
+      - backend_net
+
+  # ===========================================================
+  # ADMINER (opcional para gestionar la BD)
+  # ===========================================================
+  adminer:
+    image: adminer
+    container_name: reservas_adminer
+    restart: unless-stopped
+    ports:
+      - "9088:8080"
+    depends_on:
+      - db
+    networks:
+      - backend_net
+
+# ===========================================================
+# Volúmenes persistentes
+# ===========================================================
+volumes:
+  db_data:
+
+# ===========================================================
+# Red interna
+# ===========================================================
+networks:
+  backend_net:
