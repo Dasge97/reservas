@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title>Reserva de equipamientos municipales</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" href="img/logosinfondo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
@@ -14,7 +15,7 @@
   <header class="site-header">
     <div class="top-header">
       <div class="logo">
-        <div class="logo-mark">AM</div>
+        <div class="logo-mark"></div>
         <span class="logo-text">Ajuntament de Marella</span>
       </div>
       <span class="header-tagline">Portal de reserva d'espais municipals</span>
@@ -39,24 +40,28 @@
         <p>Selecciona un edificio sobre el mapa para ver sus salas disponibles.</p>
       </div>
 
-      <div class="map-wrapper">
-        <div class="map-placeholder">
-        </div>
+      <div class="shadows-map">
+        <div class="map-wrapper">
+          <div class="map-placeholder">
+          </div>
 
-        <!-- Tarjetas dinámicas de instituciones -->
-        <div id="institutions-container"></div>
+          <!-- Tarjetas dinámicas de instituciones -->
+          <div id="institutions-container"></div>
+        </div>
       </div>
     </section>
 
     <!-- PANEL DE SALAS -->
     <section class="panel section-rooms">
-      <header class="panel-header">
-        <h2>Salas disponibles</h2>
-        <p class="panel-subtitle">Selecciona un edificio para ver las salas disponibles.</p>
-      </header>
+      <div class="shadows-inner">
+        <header class="panel-header">
+          <h2>Salas disponibles</h2>
+          <p class="panel-subtitle">Selecciona un edificio para ver las salas disponibles.</p>
+        </header>
 
-      <div class="rooms-grid">
-        <!-- JS inyecta las salas aquí -->
+        <div class="rooms-grid">
+          <!-- JS inyecta las salas aquí -->
+        </div>
       </div>
     </section>
 
@@ -64,44 +69,46 @@
 
     <!-- PANEL DE CALENDARIO -->
     <section class="panel section-calendar">
-      <header class="panel-header">
-        <h2>Calendario de reserva</h2>
-        <p class="panel-subtitle">Selecciona un día disponible para reservar.</p>
-      </header>
+      <div class="shadows-inner">
+        <header class="panel-header">
+          <h2>Calendario de reserva</h2>
+          <p class="panel-subtitle">Selecciona un día disponible para reservar.</p>
+        </header>
 
-      <div class="calendar-layout">
+        <div class="calendar-layout">
 
-        <div class="calendar-info">
-          <h3>Sala seleccionada</h3>
-          <p class="calendar-room-name">—</p>
-          <ul class="calendar-room-details">
-            <li>Edificio: —</li>
-            <li>Capacidad: —</li>
-            <li>Equipamiento: —</li>
-          </ul>
-          <div class="calendar-legend">
-            <span><span class="legend-box legend-free"></span>Disponible</span>
-            <span><span class="legend-box legend-busy"></span>Ocupado</span>
-          </div>
-        </div>
-
-        <div class="calendar-grid">
-          <div class="calendar-header">
-            <button class="btn-ghost">&lt;</button>
-            <span>Mes</span>
-            <button class="btn-ghost">&gt;</button>
+          <div class="calendar-info">
+            <h3>Sala seleccionada</h3>
+            <p class="calendar-room-name">—</p>
+            <ul class="calendar-room-details">
+              <li>Edificio: —</li>
+              <li>Capacidad: —</li>
+              <li>Equipamiento: —</li>
+            </ul>
+            <div class="calendar-legend">
+              <span><span class="legend-box legend-free"></span>Disponible</span>
+              <span><span class="legend-box legend-busy"></span>Ocupado</span>
+            </div>
           </div>
 
-          <div class="calendar-weekdays">
-            <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
-          </div>
+          <div class="calendar-grid">
+            <div class="calendar-header">
+              <button class="btn-ghost">&lt;</button>
+              <span>Mes</span>
+              <button class="btn-ghost">&gt;</button>
+            </div>
 
-          <div class="calendar-days">
-            <!-- JS inyecta los días -->
-          </div>
+            <div class="calendar-weekdays">
+              <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+            </div>
 
-          <div class="calendar-actions">
-            
+            <div class="calendar-days">
+              <!-- JS inyecta los días -->
+            </div>
+
+            <div class="calendar-actions">
+
+            </div>
           </div>
         </div>
       </div>
@@ -109,23 +116,25 @@
 
     <!-- FORMULARIO DE RESERVA (OCULTO) -->
     <div id="reservation-form" class="reservation-form hide">
-      <h3>Confirmar reserva</h3>
+      <div class="shadows-inner">
+        <h3>Confirmar reserva</h3>
 
-      <label>Nombre:</label>
-      <input type="text" id="res-name" placeholder="Tu nombre">
+        <label>Nombre:</label>
+        <input type="text" id="res-name" placeholder="Tu nombre">
 
-      <label>Franja horaria:</label>
-      <select id="res-time">
-        <option value="">Selecciona una franja</option>
-        <option>09:00 - 10:00</option>
-        <option>10:00 - 11:00</option>
-        <option>11:00 - 12:00</option>
-        <option>12:00 - 13:00</option>
-        <option>16:00 - 17:00</option>
-        <option>17:00 - 18:00</option>
-      </select>
+        <label>Franja horaria:</label>
+        <select id="res-time">
+          <option value="">Selecciona una franja</option>
+          <option>09:00 - 10:00</option>
+          <option>10:00 - 11:00</option>
+          <option>11:00 - 12:00</option>
+          <option>12:00 - 13:00</option>
+          <option>16:00 - 17:00</option>
+          <option>17:00 - 18:00</option>
+        </select>
 
-      <button id="res-confirm" class="btn-primary">Reservar</button>
+        <button id="res-confirm" class="btn-primary">Reservar</button>
+      </div>
     </div>
 
   </main>

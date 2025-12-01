@@ -1,12 +1,14 @@
 :root {
   --color-bg: #f4f5f9;
-  --color-surface: #ffffff;
-  --color-border: #dde1ea;
-  --color-primary: #2055ff;
+  --color-surface: #ffffff00;
+  --color-border: #9eb2e1;
+  --color-primary: #8da8ff;
+  --color-primary-hover: #a1007e;
   --color-primary-soft: #e1e7ff;
   --color-text: #1f2430;
-  --color-text-soft: #6b7280;
-  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --color-text-soft: #4c4d50;
+  --shadow-soft: 0 10px 30px rgb(11, 17, 31);
+  --shadow-soft-softer: 0 10px 30px rgba(81, 86, 96, 0.489);
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
@@ -21,8 +23,33 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--color-bg);
+  background: url("../img/fondoweb.png"), var(--color-bg);  /* fondo + color base */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--color-text);
+
+  position: relative; /* necesario para el overlay */
+}
+
+/* Overlay para la transparencia */
+body::before {
+  content: "";
+  position: fixed;   /* se queda pegado a la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.35); /* ← Ajusta aquí la transparencia */
+  z-index: 0;
+  pointer-events: none; /* no bloquea clics */
+}
+
+/* Todo el contenido debe ir por encima */
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================================
@@ -30,7 +57,7 @@ body {
 ============================================================ */
 
 .site-header {
-  background: #ffffff;
+  background-color: var(--color-border);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
@@ -53,16 +80,14 @@ body {
 }
 
 .logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  background-image: url("../img/logosinfondo.png");
+  background-size: contain;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 0.9rem;
 }
 
 .logo-text {
@@ -71,6 +96,7 @@ body {
 }
 
 .main-nav {
+  background-color: var(--color-primary);
   border-top: 1px solid var(--color-border);
 }
 
@@ -93,7 +119,7 @@ body {
 }
 
 .main-nav a:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-hover);
   border-bottom-color: var(--color-primary-soft);
 }
 
@@ -167,6 +193,13 @@ main {
   cursor: pointer;
   overflow: visible;
   transform: translate(-50%, -50%); /* mantiene posición del JS */
+}
+.shadows-map {
+  padding: 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft-softer);
+  border: 1px solid #e5e7eb;
 }
 
 /* =============== CONTENIDO INTERIOR ANIMABLE ================== */
@@ -321,7 +354,7 @@ main {
 }
 
 #rooms-spacer.hide {
-  height: auto;
+  height: 15px;
 }
 
 /* ============================================================
@@ -505,18 +538,28 @@ main {
   background: #e5e7eb;
 }
 /*FORMULARIO*/
+.shadows-inner {
+  padding: 1rem;
+  background: rgb(255, 255, 255);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft-softer);
+
+}
+
 .reservation-form {
   margin-top: 1rem;
   padding: 1rem;
-  background: white;
+  background: rgba(255, 255, 255, 0);
   border-radius: var(--radius-md);
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0);
   display: none;
   animation: fadeIn 0.3s ease;
 }
 
 .reservation-form.show {
+  border: 1px solid #e5e7eb;
+  box-shadow: var(--shadow-soft);
   display: block;
 }
 
@@ -552,6 +595,7 @@ main {
   padding: 1rem 1.5rem 1.5rem;
   text-align: center;
   font-size: 0.8rem;
+  background-color: var(--color-border);
   color: var(--color-text-soft);
 }
 
